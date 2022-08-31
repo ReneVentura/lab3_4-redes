@@ -24,7 +24,7 @@ import java.io.File;
 import java.util.Arrays;
 
 
-//menu CLI para la implemtacion de las funciones del modulo funcs.java
+
 public class Main {
     public static void main(String[] args) throws Exception {
         funcs chat= new funcs();

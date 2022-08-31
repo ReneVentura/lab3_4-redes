@@ -25,14 +25,7 @@ import org.jivesoftware.smackx.filetransfer.IncomingFileTransfer;
 import org.jivesoftware.smackx.filetransfer.FileTransferRequest;
 import org.jivesoftware.smackx.packet.StreamInitiation;
 import java.io.File;
-/*
- * Nombre: Rene Ventura
- * Carnet: 19554
- * Proyecto: Implementacion de protocolos de XMPP a un chat ubicado en el servidor de XMPP alumchat.fun
- * Fecha de creacion: 12 de agosto del 2022, Guatemala, Guatemala
- * Fecha de ultima modificacion: 15 de agosto del 2022, Guatemala, Guatemala
- * 
- */
+
 
 
 // Esta clase implementa todas las funcionalidades de los protocolos, con la liberia SMACK para JAVA
