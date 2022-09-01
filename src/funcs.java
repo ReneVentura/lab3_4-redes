@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Scanner;
 import org.jivesoftware.smack.AccountManager;
 import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.XMPPConnection;
@@ -83,12 +84,21 @@ public class funcs {
         System.out.println("Ingrese el nodo a conectarse");
         Scanner scan = new Scanner(System.in);
         String connectTo=scan.nextLine();
-        connectTo = connectTo+"alumchat.fun";
-        con.disconnect();
-        log_in(user, pass, con);
+        String [] temp= new String[chated.length];
+        connectTo = connectTo+"@alumchat.fun";
+        temp[0]=connectTo;
+        for(int i =1; i<chated.length;i++){
+            if(chated[i]!=connectTo){
+                temp[i]=chated[i].toString();
+                
+            }
+        }
+        
+       // con.disconnect();
+       //log_in(user, pass, con);
         int cont = 0;
-        while (cont<chated.length){
-        Chat chat= con.getChatManager().createChat(chated[cont], new MessageListener() {// se crea un listener para poder recibir los mensajes en tiempo real
+        while (cont<nodes.length){
+            Chat chat2= con.getChatManager().createChat(temp[cont], new MessageListener() {// se crea un listener para poder recibir los mensajes en tiempo real
                             
                 
             @Override
@@ -102,19 +112,23 @@ public class funcs {
                 System.out.println("paquete recibido");
 
                 String[] reciMsg = message.getBody().split(",");
-                from = user;
-                jumpsINT = Integer.parseInt(reciMsg[2]) + 1;
+                
+                from = reciMsg[1];
+                jumpsINT = Integer.parseInt(reciMsg[3]) + 1;
                 jumps = Integer.toString(jumpsINT);
-                haveBeen = reciMsg[3]+";"+user;
-                msg = reciMsg[4];
+                haveBeen += reciMsg[5]+";"+user+";";
+                msg = reciMsg[6];
                 saveMSG.setMSG(from, jumps, dist, haveBeen, msg);
+                System.out.println(saveMSG.getPost());
                 
             }
         });
 
         if(saveMSG.hasData == true){
             try{
-            chat.sendMessage(saveMSG.getPre()+","+chated[cont]+","+saveMSG.getPost());
+            if(!saveMSG.getBin().contains(temp[cont]) && temp[cont]!= saveMSG.getPre() && temp[cont]!= user){    
+                chat2.sendMessage(saveMSG.getPre()+","+temp[cont]+","+saveMSG.getPost());
+            }
             }catch(Exception e){
                 e.printStackTrace();
             }
