@@ -102,4 +102,19 @@ public class  namesJson
         return nodes;
      }
 
+     public String getSingleNode(String key){
+        JSONParser parser = new JSONParser();
+        JSONObject a = null;
+        key = key.replace("\"", "");
+        try{
+        Object obj = parser.parse(new FileReader("topo-demo.json"));
+        JSONObject jsonObject = (JSONObject)obj;
+        a= (JSONObject) jsonObject.get("config");
+        
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return a.get(key).toString();
+     }
+
  }

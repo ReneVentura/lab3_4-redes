@@ -40,41 +40,22 @@ public class Main {
             System.out.println("Ingrese su password: ");
             String pass= scan.nextLine();
             chat.log_in(user, pass, con);
-            System.out.println("Escoge uno de los nodos disponibles (Ingresa el numero): ");
+
+            System.out.println("Elija el algoritmo: \n1) Flooding\n2) DVR\n3) LSR");
+            String algoritmo= scan.nextLine();
+
+            System.out.println("Es emisor(y/n)");
+            String emisor = scan.nextLine();
+
+            System.out.println("Elija su nodo (Ingresa el numero): ");
             int o=0;
             for(int i=0; i<id.length;i++){
                 o= i+1;
                 System.out.println("No."+ o + " Nodo: "+id[i].toString()+" user "+name[i].toString());
             } 
             int option=Integer.parseInt(scan.nextLine());
-            for(int i=0; i< id.length; i++ ){
-                if((option-1)==0){
-                    chat.chat_someone(con, name[i]);
-                }
-                else if((option-1)==1){
-                    chat.chat_someone(con, name[i]);
-                }
-                else if((option-1)==2){
-                    chat.chat_someone(con, name[i]);
-                }
-                else if((option-1)==3){
-                    chat.chat_someone(con, name[i]);
-                }
-                else if((option-1)==4){
-                    chat.chat_someone(con, name[i]);
-                }
-                else if((option-1)==5){
-                    chat.chat_someone(con, name[i]);
-                }
-                else if((option-1)==6){
-                    chat.chat_someone(con, name[i]);
-                }
-                else{
-                    break;
-                }
-            }
-
-
+            
+            chat.chat_someone(con, name, nodes[option-1], user, algoritmo, emisor,pass);
             
         }
         catch(Exception e){
