@@ -49,7 +49,7 @@ public class funcs {
         }  
     }
 
-// Crea una comunicacion 1-1 entre un contacto deseado 
+// Crea una comunicacion peer-peer entre un contacto deseado 
     public static void chat_someone(XMPPConnection con, String[] chated, Object[] nodes, String user, String algoritmo, String emisor,String pass){
         namesJson jsonf= new namesJson();
         if(emisor.equals("y")&& algoritmo.equals("1")){
@@ -97,7 +97,9 @@ public class funcs {
        // con.disconnect();
        //log_in(user, pass, con);
         int cont = 0;
-        while (cont<nodes.length){
+        while (cont<temp.length){
+            if(!temp[cont].contains(user)){
+                //System.out.println(temp[cont]);;
             Chat chat2= con.getChatManager().createChat(temp[cont], new MessageListener() {// se crea un listener para poder recibir los mensajes en tiempo real
                             
                 
@@ -126,18 +128,24 @@ public class funcs {
 
         if(saveMSG.hasData == true){
             try{
-            if(!saveMSG.getBin().contains(temp[cont]) && temp[cont]!= saveMSG.getPre() && temp[cont]!= user){    
+            if(!saveMSG.getBin().contains(temp[cont]) && !temp[cont].contains(saveMSG.getPre()) && temp[cont]!= user+"@alumchat.fun" ){    
                 chat2.sendMessage(saveMSG.getPre()+","+temp[cont]+","+saveMSG.getPost());
+                System.out.println(temp[cont]);
             }
+          
             }catch(Exception e){
                 e.printStackTrace();
             }
             cont++;
         }
-
+    }
+    else{
+        cont++;
+    }
     }
            // chat.sendMessage(user+","+chated[]);
     }
+    
     }
 
     public static void special_chat(XMPPConnection con, String chated,String msg){

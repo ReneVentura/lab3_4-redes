@@ -1,0 +1,44 @@
+Source A
+Dest B
+
+
+
+GLOBAL costo, string
+
+el costo de vecinos es 1
+
+linkRouting( source, dest)
+
+Caminos_source-> todos los caminos posibles entre source y dest
+dijkstra(Caminos_source)
+    source->nodos[i]....dest
+    retorna 
+        shortest(source a dest)
+            retorna el costo
+            retorna el string
+
+
+Flooding()
+
+    distancia shortest(source a dest ):costo
+    el recorrido: shortest(source a dest):string(A->F->B)
+
+
+
+
+en el main
+
+from->a
+sendmessage(b,linkRouting(a,b))
+
+"A": ["C", "E", "F", "G"], "B": ["F", "G"], "C": ["A", "D", "G"], "D": ["C"], "E": ["A"], "F": ["A", "B"], "G": ["A", "B", "C"]
+
+
+a b c d e f g 
+a 0 i 1 i 1 1 1
+b i 0 i i i 1 1      
+c 1 i 0 1 i i 1
+d i i 1 0 i i i
+e 1 i i i 0 i i
+f 1 1 i i i 0 i
+g 1 1 1 i i i 0
