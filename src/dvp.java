@@ -1,92 +1,198 @@
+import org.jivesoftware.smack.MessageListener;
+import org.jivesoftware.smack.PacketListener;
+import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.XMPPException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collection;
+import java.util.Scanner;
+import org.jivesoftware.smack.AccountManager;
+import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.MessageListener;
+import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.RosterEntry;
+import org.jivesoftware.smack.Roster;
+import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smackx.GroupChatInvitation;
+import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.jivesoftware.smack.packet.Packet;
+import org.jivesoftware.smackx.filetransfer.FileTransferManager;
+import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
+import java.io.File;
+import java.util.Arrays;
 
-import java.io.*;
-import java.util.*; 
-public class dvp 
-{
- static int graph[][];
- static int via[][];
- static int rt[][];
- static int v;
- static int e;
- public static void main(String[] args)
- {
-       Scanner sc = new Scanner(System.in);
-       System.out.print("Enter the number of nodes : ");
-       int nodes = sc.nextInt();
-      
-     int[] preD = new int[nodes];
-     int min = 999, nextNode = 0;
+
+public class dvp{
+    static int graph[][];
+    static int via[][];
+    static int rt[][];
+    static int v;
+    static int e;
+    static int MAX_VALUE=999;
+    Scanner br = new Scanner(System.in);
+    static namesJson jsonf= new namesJson();
+    static String[] id= jsonf.getID();
+    static String[] names= jsonf.getName();
+    static Object[][] nodes= jsonf.getNodes();
+    static int vertex= nodes.length; 
+public static void bellmeameesta( int v, int e, int cost, String name){
     
-     int[] distance = new int[nodes];
-     int[][] matrix = new int[nodes][nodes];
-     int[] visited = new int[nodes];
+  int s=0; 
+  int d=0;
+  graph = new int[v][v];
+  via = new int[v][v];
+  rt = new int[v][v];
+  for(int i = 0; i < v; i++)
+   for(int j = 0; j < v; j++)
+   {
+    if(i == j)
+     graph[i][j] = 0;
+    else
+     graph[i][j] = 9999;
+   }
+  
+  for(int i = 0; i < e; i++)
+  {/* */
 
-     System.out.println("Enter the cost matrix");
-
-     for (int i = 0; i < distance.length; i++)
-     {
-         visited[i] = 0;
-         preD[i] = 0;
-
-         for (int j = 0; j < distance.length; j++)
-         {
-             matrix[i][j] = sc.nextInt();
-             if (matrix[i][j]==0)
-                 matrix[i][j] = 999;
-         }
-     }
-
-     distance = matrix[0];
-     visited[0] = 1;
-     distance[0] = 0; 
-
-     for (int counter = 0; counter < nodes; counter++)
-     {
-         min = 999;
-         for (int i = 0; i < nodes; i++)
-         {
-             if (min > distance[i] && visited[i]!=1)
-             {
-                 min = distance[i];
-                 nextNode = i;
-             }
-         }
-
-         visited[nextNode] = 1;
-         for (int i = 0; i < nodes; i++)
-         {
-             if (visited[i]!=1)
-             {
-                 if (min+matrix[nextNode][i] < distance[i])
-                 {
-                     distance[i] = min+matrix[nextNode][i];
-                     preD[i] = nextNode;
-                 }
-             }
-         }
-     }
-
-   
-     int j;
-     for (int i = 0; i < nodes; i++)
-     {
-         if (i!=0)
-         {
-
-             System.out.print("Path = " + i);
-             j = i;
-             do
-             {
-                 j = preD[j];
-                 System.out.print(" <- " + j);
-             }
-             while(j != 0);
-                System.out.println();
-                System.out.print("Cost = " + distance[i]);
-         }
-         System.out.println("\n");
+    for(int k =0; k <  id.length; k++){
+            
+      if(name.equals(names[k])){
+          //System.out.println("sus nodos son: "+ Arrays.deepToString(nodes[i]));
+          for(int j =0; j <  nodes[k].length; j++){
           
-     }
- }
-}
+          s=j;
+          d=j+1;
+ 
+          graph[s][d] = cost;
+          graph[d][s] = cost; 
+          }  
+      }
+      else{
+        for(int j =0; j <  nodes[k].length; j++){
+          
+          s=j;
+          d=j+1;
+ 
+          graph[s][d] =MAX_VALUE;
+          graph[d][s] = MAX_VALUE; 
+          }  
+      }
+  } 
 
+
+
+  }
+  
+  dvr_calc_disp("DVP : ");
+
+
+
+}
+  
+  
+ 
+ 
+ static void dvr_calc_disp(String message)
+ {
+  System.out.println();
+  init_tables(vertex);
+  update_tables(vertex);
+  System.out.println(message);
+  print_tables(vertex);
+  System.out.println(vertex);
+ }
+ 
+ static void update_table(int source)
+ {
+  for(int i = 0; i < v; i++)
+  {
+   if(graph[source][i] != 9999)
+   {
+    int dist = graph[source][i];
+    for(int j = 0; j < v; j++)
+    {
+     int inter_dist = rt[i][j];
+     if(via[i][j] == source)
+      inter_dist = 9999;
+     if(dist + inter_dist < rt[source][j])
+     {
+      rt[source][j] = dist + inter_dist;
+      via[source][j] = i;
+     }
+    }
+   }
+  }
+ }
+ 
+ static void update_tables(int v)
+ {
+  int k = 0;
+  for(int i = 0; i < 4*v; i++)
+  {
+   update_table(k);
+   k++;
+   if(k == v)
+    k = 0;
+  }
+ }
+ 
+ static void init_tables(int v)
+ {
+  for(int i = 0; i < v; i++)
+  {
+   for(int j = 0; j < v; j++)
+   {
+    if(i == j)
+    {
+     rt[i][j] = 0;
+     via[i][j] = i;
+    }
+    else
+    {
+     rt[i][j] = 9999;
+     via[i][j] = 100;
+    }
+   }
+  }
+ }
+ 
+ static void print_tables(int v)
+ {
+  for(int i = 0; i < v; i++)
+  {
+   for(int j = 0; j < v; j++)
+   {
+    System.out.print("Dist: " + rt[i][j] + "    ");
+   }
+   System.out.println();
+  }
+ }
+ 
+
+    public  static void main(String[] args) throws Exception {
+        
+        
+
+      //  System.out.println(Arrays.deepToString(nodes[0]));  
+        //System.out.println(Arrays.deepToString(id));
+        //System.out.println(names[2]);
+        String name="oscar123@alumchat.fun"; 
+        
+        int edges = 0;
+        
+        for(int i =0; i <  id.length; i++){
+          edges+= nodes[i].length;
+
+        }
+        System.out.println(edges);
+        bellmeameesta(vertex, edges, 1, name);
+
+
+
+
+
+
+    }
+}
