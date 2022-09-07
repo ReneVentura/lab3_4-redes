@@ -37,7 +37,7 @@ public class dvp{
     static String[] names= jsonf.getName();
     static Object[][] nodes= jsonf.getNodes();
     static int vertex= nodes.length; 
-public static void bellmeameesta( int v, int e, int cost, String name){
+public static String bellmeameesta( int v, int e, int cost, String name){
     
   int s=0; 
   int d=0;
@@ -84,8 +84,10 @@ public static void bellmeameesta( int v, int e, int cost, String name){
 
 
   }
+  String res;
   
-  dvr_calc_disp("DVP : ");
+  res=dvr_calc_disp("DVP : ");
+  return res;
 
 
 
@@ -94,14 +96,17 @@ public static void bellmeameesta( int v, int e, int cost, String name){
   
  
  
- static void dvr_calc_disp(String message)
+ static String dvr_calc_disp(String message)
  {
+  String s="";
   System.out.println();
   init_tables(vertex);
   update_tables(vertex);
   System.out.println(message);
-  print_tables(vertex);
-  System.out.println(vertex);
+  s+=message+"\n";
+  s+=print_tables(vertex)+"\n";
+  s+=vertex+"\n";
+  return s;
  }
  
  static void update_table(int source)
@@ -158,16 +163,19 @@ public static void bellmeameesta( int v, int e, int cost, String name){
   }
  }
  
- static void print_tables(int v)
+ static String print_tables(int v)
  {
+  String t="";
   for(int i = 0; i < v; i++)
   {
    for(int j = 0; j < v; j++)
    {
-    System.out.print("Dist: " + rt[i][j] + "    ");
+    t+="Dist: " + rt[i][j] + "    ";
    }
+   t+="\n";
    System.out.println();
   }
+  return t;
  }
  
 
@@ -178,6 +186,7 @@ public static void bellmeameesta( int v, int e, int cost, String name){
       //  System.out.println(Arrays.deepToString(nodes[0]));  
         //System.out.println(Arrays.deepToString(id));
         //System.out.println(names[2]);
+        XMPPConnection con = new XMPPConnection("alumchat.fun");
         String name="oscar123@alumchat.fun"; 
         
         int edges = 0;
@@ -187,7 +196,7 @@ public static void bellmeameesta( int v, int e, int cost, String name){
 
         }
         System.out.println(edges);
-        bellmeameesta(vertex, edges, 1, name);
+        System.out.println(bellmeameesta(vertex, edges, 1, name));
 
 
 
