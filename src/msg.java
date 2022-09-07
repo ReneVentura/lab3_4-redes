@@ -5,7 +5,6 @@ public class msg {
     public String post;
     public String retBeen;
     public boolean hasData = false;
-    public String receptor = "";
 
 
     public void setMSG(String from, String jumps, String dist, String haveBeen, String msg){
@@ -13,14 +12,6 @@ public class msg {
         pre = from;
         post = jumps + "," + dist + "," + haveBeen + "," + msg;
         hasData = true;
-    }
-
-    public void setReceptor(String receptor){
-        this.receptor = receptor;
-    }
-
-    public String getReceptor(){
-        return this.receptor;
     }
 
     public String getPre(){

@@ -33,7 +33,8 @@ public class Main {
         String[] name= jsonf.getName();
         Object[][] nodes= jsonf.getNodes();
         XMPPConnection con = new XMPPConnection("alumchat.fun");
-        Scanner scan = new Scanner(System.in);    
+        Scanner scan = new Scanner(System.in);  
+        System.out.println(Arrays.deepToString(nodes));  
         try{
             System.out.println("Ingrese su usuario: ");
             String user= scan.nextLine();

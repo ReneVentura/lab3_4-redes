@@ -3,6 +3,7 @@ import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Collection;
 import java.util.Scanner;
@@ -55,8 +56,24 @@ public class funcs {
         if(emisor.equals("y")&& algoritmo.equals("1")){
         try{
             int cont = 0;
+            String [] temp= new String[nodes.length];
+            namesJson jsonnn= new namesJson();
+            String[] ids= jsonnn.getID();
+            for(int i=0; i<nodes.length;i++)
+            {
+                nodes[i]= nodes[i].toString().replace("\"", "");
+            }
+            System.out.println(Arrays.deepToString(nodes));
+            for(int i=0; i<chated.length;i++){
+                for(int j=0; j<nodes.length;j++){
+                if(ids[i].contains(nodes[j].toString())){
+                    temp[j]=chated[i].toString();
+                }}
+            }
+            System.out.println(Arrays.deepToString(temp));
+        
             while(cont<nodes.length){
-            Chat chat= con.getChatManager().createChat(chated[cont], new MessageListener() {// se crea un listener para poder recibir los mensajes en tiempo real
+            Chat chat= con.getChatManager().createChat(temp[cont], new MessageListener() {// se crea un listener para poder recibir los mensajes en tiempo real
                             
                 
                 @Override
@@ -68,8 +85,8 @@ public class funcs {
             Scanner reader = new Scanner(System.in);*/
             
             if(!(user+"@alumchat.fun").equals(chated[cont])){
-                chat.sendMessage("flooding " + "," + user+"@alumchat.fun" + "," + chated[cont] + "," + "0,0," + "listado,paquete");
-                System.out.println("flooding" + "," + user +"@alumchat.fun"+ "," + chated[cont] + "," + "0,0," + "listado,paquete");
+                chat.sendMessage("flooding " + "," + user+"@alumchat.fun" + "," + temp[cont] + "," + "0,0," + "listado,paquete");
+                System.out.println("flooding" + "," + user +"@alumchat.fun"+ "," + temp[cont] + "," + "0,0," + "listado,paquete");
                 System.out.println("Solo prints no se envio nada");
             }
             //con.disconnect();
@@ -284,4 +301,3 @@ public class funcs {
     }
 
 }
-

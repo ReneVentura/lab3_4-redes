@@ -60,7 +60,7 @@ public static String bellmeameesta( int v, int e, int cost, String name){
             
       if(name.equals(names[k])){
           //System.out.println("sus nodos son: "+ Arrays.deepToString(nodes[i]));
-          for(int j =0; j <  nodes[k].length; j++){
+          for(int j =0; j <  nodes[k].length-1; j++){
           
           s=j;
           d=j+1;
