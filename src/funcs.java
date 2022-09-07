@@ -136,7 +136,6 @@ public class funcs {
                         
                         cont++;
                         
-                        //con.disconnect();
                     }
                     cont = 0;
                     while (cont<1){ /*Recorre los vecinos obtenidos*/
@@ -144,7 +143,7 @@ public class funcs {
                         /*Realiza conexion con cada vecino segun su @alumchat*/
                         Chat chatToReceptor= con.getChatManager().createChat(receptor, new MessageListener() {// se crea un listener para poder recibir los mensajes en tiempo real
 
-                            @Override
+                        @Override
                         public void processMessage(Chat chat, Message message) {
                             String from = "";
                             String receptor = "";
@@ -153,7 +152,7 @@ public class funcs {
                             String dist = "";
                             String haveBeen = "";
                             String msg = "";
-                            System.out.println("paquete recibido desde destino final :D");
+                            
                             /*Routing Protocol - Emisor - Nodo destino inmediato - 
                             Saltos - Distancia - Nodos en los que ha estado - Mensaje -  Receptor Final*/
                             String[] reciMsg = message.getBody().split(",");
@@ -166,7 +165,9 @@ public class funcs {
                             msg = reciMsg[6];
                             receptor = reciMsg[7];
                             saveMSG.setReceptor(receptor);
-                            saveMSG.setMSG(from, jumps, dist, haveBeen, msg);                                System.out.println(saveMSG.getPost());
+                            saveMSG.setMSG(from, jumps, dist, haveBeen, msg);
+                            System.out.println("paquete recibido desde destino final :D");                             
+                            System.out.println(saveMSG.getPost());
                                             
                         }
                         });
@@ -319,10 +320,9 @@ public class funcs {
                         }
                         });
                         
-                        if(receptor.equals(user)){ /*Identifica la llegada del routing discoverer,
+                        if(saveMSG.getReceptor().equals(user+"@alumchat.fun")){ /*Identifica la llegada del routing discoverer,
                             
                             se espera que identifique el shortest path y lo envie al nodo emisor*/
-                            System.out.println(user);
                             
                             try{
                                 Chat chatToSender= con.getChatManager().createChat((saveMSG.getPre()+"@alumchat.fun"), new MessageListener() {
@@ -333,6 +333,7 @@ public class funcs {
                                 });
                                 chatToSender.sendMessage("Link State Routing: Ruta Certificada" +","+saveMSG.getPre()+","+neighbor+","+saveMSG.getPost()+receptor);
                                 System.out.println("paquete recibido en destino emisor --> "+saveMSG.getPost());
+                                break;
                             }catch(Exception e){
                                 e.printStackTrace();
                             }
