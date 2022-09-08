@@ -11,7 +11,7 @@ public class  namesJson
         String[] arr= null;
         
         try {
-           Object obj = parser.parse(new FileReader("names-demo.json"));
+           Object obj = parser.parse(new FileReader("names1-x-randomB.json"));
            JSONObject jsonObject = (JSONObject)obj;
            String a= jsonObject.get("config").toString();
            a= a.substring(1,a.length()-1);
@@ -44,7 +44,7 @@ public class  namesJson
         String[] arr= null;
         
         try {
-           Object obj = parser.parse(new FileReader("names-demo.json"));
+           Object obj = parser.parse(new FileReader("names1-x-randomB.json"));
            JSONObject jsonObject = (JSONObject)obj;
            String a= jsonObject.get("config").toString();
            a= a.substring(1,a.length()-1);
@@ -72,13 +72,14 @@ public class  namesJson
         return name;
      }
      public Object[][] getNodes(){
-        String[] ids= {"A","B","C","D","E","F","G"};
+        String[] ids= getID();
+        System.out.println(Arrays.deepToString(ids));
         String[] temp= new String[ids.length];
         Object[][] nodes=new Object[ids.length][ids.length];
         JSONParser parser = new JSONParser();
         JSONObject a = null;
         try{
-        Object obj = parser.parse(new FileReader("topo-demo.json"));
+        Object obj = parser.parse(new FileReader("topo1-randomB.json"));
         JSONObject jsonObject = (JSONObject)obj;
         JSONArray f= new JSONArray();
         
@@ -107,7 +108,7 @@ public class  namesJson
         JSONObject a = null;
         key = key.replace("\"", "");
         try{
-        Object obj = parser.parse(new FileReader("topo-demo.json"));
+        Object obj = parser.parse(new FileReader("topo1-randomB.json"));
         JSONObject jsonObject = (JSONObject)obj;
         a= (JSONObject) jsonObject.get("config");
         
