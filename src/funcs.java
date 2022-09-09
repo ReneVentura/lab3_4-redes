@@ -178,110 +178,122 @@ public class funcs {
     }
            // chat.sendMessage(user+","+chated[]);
     }
-    if(emisor.equals("y")&& algoritmo.equals("2")){
-        int edges = 0;
-        dvp divp= new dvp();
-        String[] id= jsonf.getID();
-        String[] names= jsonf.getName();
-        Object[][] nodess= jsonf.getNodes();
-        int vertex= nodes.length; 
-        
-        for(int i =0; i <  id.length; i++){
-          edges+= nodess[i].length;
-
-        }
-        try{
-            int cont = 0;
-            while(cont<nodes.length){
-            Chat chat= con.getChatManager().createChat(chated[cont], new MessageListener() {// se crea un listener para poder recibir los mensajes en tiempo real
-                            
-                
-                @Override
-                public void processMessage(Chat chat, Message message) {
-                    System.out.println("paquete recibido");
-                }
-            });
-            /*System.out.println("Esta chateando con "+ chated+" si desea salir escriba '666'\n");
-            Scanner reader = new Scanner(System.in);*/
-            
-            if(!(user+"@alumchat.fun").equals(chated[cont])){
-                chat.sendMessage("dvp" + "," + user+"@alumchat.fun" + "," + chated[cont] + "," + divp.bellmeameesta(vertex, edges, 1, chated[cont])+ "listado,paquete");
-                System.out.println("flooding" + "," + user +"@alumchat.fun"+ "," + chated[cont] + "," + "0,0," + "listado,paquete");
-                System.out.println("Solo prints no se envio nada");
-            }
-            //con.disconnect();
-            cont++;
-       } }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    else if(emisor.equals("n") && algoritmo.equals("2")){
-        msg saveMSG = new msg();
-       
-        System.out.println("Ingrese el nodo a conectarse");
-        Scanner scan = new Scanner(System.in);
-        String connectTo=scan.nextLine();
-        String [] temp= new String[chated.length];
-        connectTo = connectTo+"@alumchat.fun";
-        temp[0]=connectTo;
-        for(int i =1; i<chated.length;i++){
-            if(chated[i]!=connectTo){
-                temp[i]=chated[i].toString();
-                
-            }
-        }
-        
-       // con.disconnect();
-       //log_in(user, pass, con);
+ if(emisor.equals("y")&& algoritmo.equals("2")){
+    try{
         int cont = 0;
-        while (cont<temp.length){
-            if(!temp[cont].contains(user)){
-                //System.out.println(temp[cont]);;
-            Chat chat2= con.getChatManager().createChat(temp[cont], new MessageListener() {// se crea un listener para poder recibir los mensajes en tiempo real
-                            
-                
+        dvp dvpr= new dvp();
+        String [] temp= new String[nodes.length];
+        namesJson jsonnn= new namesJson();
+        String[] ids= jsonnn.getID();
+        String vp;
+        for(int i=0; i<nodes.length;i++)
+        {
+            nodes[i]= nodes[i].toString().replace("\"", "");
+        }
+        System.out.println(Arrays.deepToString(nodes));
+        for(int i=0; i<chated.length;i++){
+            for(int j=0; j<nodes.length;j++){
+            if(ids[i].contains(nodes[j].toString())){
+                temp[j]=chated[i].toString();
+            }}
+        }
+        System.out.println(Arrays.deepToString(temp));
+    
+        while(cont<nodes.length){
+        Chat chat= con.getChatManager().createChat(temp[cont], new MessageListener() {// se crea un listener para poder recibir los mensajes en tiempo real
+                        
+            
             @Override
             public void processMessage(Chat chat, Message message) {
-                String from = "";
-                String jumps = "";
-                int jumpsINT = 0;
-                String dist = "0";
-                String haveBeen = "";
-                String msg = "";
                 System.out.println("paquete recibido");
-
-                String[] reciMsg = message.getBody().split(",");
-                
-                from = reciMsg[1];
-                jumpsINT = Integer.parseInt(reciMsg[3]) + 1;
-                jumps = Integer.toString(jumpsINT);
-                haveBeen += reciMsg[5]+";"+user+";";
-                msg = reciMsg[6];
-                saveMSG.setMSG(from, jumps, dist, haveBeen, msg);
-                System.out.println(saveMSG.getPost());
-                
             }
         });
+        /*System.out.println("Esta chateando con "+ chated+" si desea salir escriba '666'\n");
+        Scanner reader = new Scanner(System.in);*/
+        
+        if(!(user+"@alumchat.fun").equals(chated[cont])){
+            System.out.println(temp.toString());
+            vp= dvpr.bellmeameesta(temp, temp.length+1, temp.length, 1, user);
+            chat.sendMessage("dvp" + "|" + user+"@alumchat.fun" + "|" + temp[cont] + "|" +vp + "|"+Arrays.deepToString(nodes)+"|"+"paquete");
+            System.out.println("dvp" + "," + user +"@alumchat.fun"+ "," + temp[cont] + "," + "0,0," + "listado,paquete");
+            System.out.println("Solo prints no se envio nada");
+        }
+        //con.disconnect();
+        cont++;
+   } }catch(Exception e){
+        e.printStackTrace();
+    }
+}
 
-        if(saveMSG.hasData == true){
-            try{
-            if(!saveMSG.getBin().contains(temp[cont]) && !temp[cont].contains(saveMSG.getPre()) && temp[cont]!= user+"@alumchat.fun" ){    
-                chat2.sendMessage(saveMSG.getPre()+","+temp[cont]+","+saveMSG.getPost());
-                System.out.println(temp[cont]);
-            }
-          
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-            cont++;
+else if(emisor.equals("n") && algoritmo.equals("2")){
+    msg saveMSG = new msg();
+   
+    System.out.println("Ingrese el nodo a conectarse");
+    Scanner scan = new Scanner(System.in);
+    String connectTo=scan.nextLine();
+    String [] temp= new String[chated.length];
+    connectTo = connectTo+"@alumchat.fun";
+    temp[0]=connectTo;
+    for(int i =1; i<chated.length;i++){
+        if(chated[i]!=connectTo){
+            temp[i]=chated[i].toString();
+            
         }
     }
-    else{
+    
+   // con.disconnect();
+   //log_in(user, pass, con);
+    int cont = 0;
+    while (cont<temp.length){
+        if(!temp[cont].contains(user)){
+            //System.out.println(temp[cont]);;
+        Chat chat2= con.getChatManager().createChat(temp[cont], new MessageListener() {// se crea un listener para poder recibir los mensajes en tiempo real
+                        
+            
+        @Override
+        public void processMessage(Chat chat, Message message) {
+            String from = "";
+            String jumps = "";
+            int jumpsINT = 0;
+            String dist = "";
+            String haveBeen = "";
+            String msg = "";
+            System.out.println("paquete recibido");
+
+            String[] reciMsg = message.getBody().split("|");
+            
+            from = reciMsg[1];
+            jumpsINT = Integer.parseInt(reciMsg[2]) + 1;
+            jumps = Integer.toString(jumpsINT);
+            haveBeen += reciMsg[4]+";"+user+";";
+            msg = reciMsg[5];
+            dist= reciMsg[3];
+            saveMSG.setMSG(from, jumps, dist, haveBeen, msg);
+            System.out.println(saveMSG.getPost());
+            
+        }
+    });
+
+    if(saveMSG.hasData == true){
+        try{
+        if(!saveMSG.getBin().contains(temp[cont]) && !temp[cont].contains(saveMSG.getPre()) && temp[cont]!= user+"@alumchat.fun" ){    
+            chat2.sendMessage(saveMSG.getPre()+","+temp[cont]+","+saveMSG.getPost());
+            System.out.println(temp[cont]);
+        }
+      
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         cont++;
     }
-    }
-           // chat.sendMessage(user+","+chated[]);
-    }
+}
+else{
+    cont++;
+}
+}
+       // chat.sendMessage(user+","+chated[]);
+}
+       
     if(emisor.equals("y") && algoritmo.equals("3")){
         msg saveMSG = new msg();
                 try{
