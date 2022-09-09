@@ -7,7 +7,6 @@ public class msg {
     public boolean hasData = false;
     public String receptor = "";
 
-
     public void setMSG(String from, String jumps, String dist, String haveBeen, String msg){
         this.haveBeen= haveBeen;
         pre = from;
@@ -22,7 +21,6 @@ public class msg {
     public String getReceptor(){
         return this.receptor;
     }
-
     public String getPre(){
         return pre;
     }

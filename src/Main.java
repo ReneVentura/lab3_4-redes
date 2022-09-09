@@ -48,12 +48,13 @@ public class Main {
 
             System.out.println("Es emisor(y/n)");
             String emisor = scan.nextLine();
-            
+
             if(emisor.equals("y")&&algoritmo.equals("3")){
 
                 System.out.println("Indique receptor: blabla@alumchat.fun");
                 receptor= scan.nextLine();
             }
+
             System.out.println("Elija su nodo (Ingresa el numero): ");
             int o=0;
             for(int i=0; i<id.length;i++){
@@ -62,7 +63,7 @@ public class Main {
             } 
             int option=Integer.parseInt(scan.nextLine());
             
-            chat.chat_someone(con, name, nodes[option-1], user, algoritmo, emisor,pass, receptor);
+            chat.chat_someone(con, name, nodes[option-1], user, algoritmo, emisor,pass,receptor);
             
         }
         catch(Exception e){
