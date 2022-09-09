@@ -37,7 +37,7 @@ public class dvp{
     static String[] names= jsonf.getName();
     static Object[][] nodes= jsonf.getNodes();
     static int vertex= nodes.length; 
-public static String bellmeameesta( int v, int e, int cost, String name){
+public static String bellmeameesta( String[] temp, int v, int e, int cost, String name){
     
   int s=0; 
   int d=0;
@@ -52,34 +52,24 @@ public static String bellmeameesta( int v, int e, int cost, String name){
     else
      graph[i][j] = 9999;
    }
-  
+  int f=0;
   for(int i = 0; i < e; i++)
   {/* */
 
-    for(int k =0; k <  id.length; k++){
-            
-      if(name.equals(names[k])){
-          //System.out.println("sus nodos son: "+ Arrays.deepToString(nodes[i]));
-          for(int j =0; j <  nodes[k].length-1; j++){
-          
-          s=j;
-          d=j+1;
- 
-          graph[s][d] = cost;
-          graph[d][s] = cost; 
-          }  
-      }
-      else{
-        for(int j =0; j <  nodes[k].length; j++){
-          
-          s=j;
-          d=j+1;
- 
-          graph[s][d] =MAX_VALUE;
-          graph[d][s] = MAX_VALUE; 
-          }  
-      }
-  } 
+    f=i+1;
+    if(f<e){
+    s=i;
+    d=i+1;
+    }
+    else{
+      s=i;
+      d=e-1;
+    }
+    
+
+    graph[s][d] = cost;
+    graph[d][s] = cost; 
+  
 
 
 
@@ -196,7 +186,7 @@ public static String bellmeameesta( int v, int e, int cost, String name){
 
         }
         System.out.println(edges);
-        System.out.println(bellmeameesta(vertex, edges, 1, name));
+        
 
 
 
